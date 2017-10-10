@@ -10,6 +10,7 @@ public class SmarterGame : MonoBehaviour {
 	private int[,] NCAB = new int[9,3];
 	TStrikes[] AB = new TStrikes[2];
 	TStrikes Response = new TStrikes();
+	TStrikes PResponse = new TStrikes();
 	double ProbRock;
 	double ProbPaper;
 	double ProbScissors;
@@ -59,19 +60,43 @@ public class SmarterGame : MonoBehaviour {
 		ProbScissors = (double)NCAB[i,2] / (double)NAB[i];
 		if ((ProbRock > ProbPaper) &&
 		    (ProbRock > ProbScissors)) {
+			print ("Prediciting rock");
 			Prediction = TStrikes.Rock;
 			return TStrikes.Rock;
 		}
 		if ((ProbPaper > ProbRock) &&
 		    (ProbPaper > ProbScissors)) {
 			Prediction = TStrikes.Paper;
+			print ("Prediciting paper");
 			return TStrikes.Paper;
 		}
 		if ((ProbScissors > ProbRock) &&
 		    (ProbScissors > ProbPaper)) {
+			print ("Prediciting scissors");
 			Prediction = TStrikes.Scissors;
 			return TStrikes.Scissors;
 		}
+		if ((ProbRock == ProbPaper) &&
+			(ProbRock > ProbScissors)) {
+			print ("Prediciting rock or paper");
+			Prediction = (TStrikes)UnityEngine.Random.Range(0,1);
+			return Prediction;
+		}
+		if ((ProbRock == ProbScissors) &&
+			(ProbRock > ProbPaper)) {
+			print ("Prediciting rock or scissors");
+			do {
+				Prediction = (TStrikes)UnityEngine.Random.Range (0, 2);
+			} while(Prediction == (TStrikes)1);
+			return Prediction;
+		}
+		if ((ProbPaper == ProbScissors) &&
+			(ProbPaper > ProbRock)) {
+			print ("Prediciting paper or scissors");
+			Prediction = (TStrikes)UnityEngine.Random.Range(1,2);
+			return Prediction;
+		}
+		print ("last resort");
 		Prediction = (TStrikes)UnityEngine.Random.Range(0,2); // Last resort
 		return Prediction;
 	}
@@ -79,6 +104,7 @@ public class SmarterGame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		PResponse = TStrikes.Rock;
 		for (int i = 0; i < 2; i++) {
 			AB[i] = new TStrikes ();
 		}
@@ -94,23 +120,31 @@ public class SmarterGame : MonoBehaviour {
 	void Update(){
 		if (hasPlayerInput) {
 			if (playerState == State.ROCK) {
-				Response = ProcessMove ((TStrikes)1);
-				print (Response);
-			}
-			if (playerState == State.PAPER) {
-				Response = ProcessMove ((TStrikes)2);
-				print(Response);
-			}	
-			if (playerState == State.SCISSORS) {
 				Response = ProcessMove ((TStrikes)0);
 				print (Response);
 			}
-			if(Response == (TStrikes)0)
-				spriteRenderer.sprite = spriteRock;
-			if (Response == (TStrikes)1)
+			if (playerState == State.PAPER) {
+				Response = ProcessMove ((TStrikes)1);
+				print(Response);
+			}	
+			if (playerState == State.SCISSORS) {
+				Response = ProcessMove ((TStrikes)2);
+				print (Response);
+			}
+
+			if (PResponse == (TStrikes)0){
+				print ("Response is paper");
 				spriteRenderer.sprite = spritePaper;
-			if (Response == (TStrikes)2)
+			}
+			if (PResponse == (TStrikes)1) {
+				print ("Response is scissors");
 				spriteRenderer.sprite = spriteScissors;
+			}
+			if (PResponse == (TStrikes)2){
+				print ("Response is rock");
+				spriteRenderer.sprite = spriteRock;
+			}
+			PResponse = Response;
 		}
 		hasPlayerInput = false;
 	}

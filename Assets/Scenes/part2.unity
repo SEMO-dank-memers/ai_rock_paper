@@ -676,10 +676,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1027366650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62ab214aa617a24fb13c4dcc6682dd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c900d193beba3944bbc2ddf7d86b6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Response: 0
   btnRock: {fileID: 1216491848}
   btnPaper: {fileID: 899734002}
   btnScissors: {fileID: 1569072987}

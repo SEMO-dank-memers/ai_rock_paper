@@ -7,7 +7,7 @@ public class ButtonHandler : MonoBehaviour
 {
     private enum TStrikes { Rock, Paper, Scissors, Unknown };
     public int Response;
-
+	private int PResponse;
     struct TWorkingMemory
     {
         public TStrikes strikeA; //previous strike
@@ -55,6 +55,7 @@ public class ButtonHandler : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		PResponse = 0;
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer.sprite == null) spriteRenderer.sprite = spriteRock;
         playerState = State.UNDEFINED;
@@ -189,31 +190,32 @@ public class ButtonHandler : MonoBehaviour
         {
             if (playerState == State.ROCK)
             {
-                ProcessMove((TStrikes)1);
+                ProcessMove((TStrikes)0);
                 Response = (int)WorkingMemory.strikeC;
                 print(Response);
                 RandomPrediction = (TStrikes)Random.Range(0, 2);
             }
             if (playerState == State.PAPER)
             {
-                ProcessMove((TStrikes)2);
+                ProcessMove((TStrikes)1);
                 Response = (int)WorkingMemory.strikeC;
                 print(Response);
                 RandomPrediction = (TStrikes)Random.Range(0, 2);
             }
             if (playerState == State.SCISSORS)
             {
-                ProcessMove((TStrikes)0);
+                ProcessMove((TStrikes)2);
                 Response = (int)WorkingMemory.strikeC;
                 print(Response);
                 RandomPrediction = (TStrikes)Random.Range(0, 2);
             }
-            if(Response == 0)
-                spriteRenderer.sprite = spriteRock;
-            if (Response == 1)
+            if(PResponse == 0)
                 spriteRenderer.sprite = spritePaper;
-            if (Response == 2)
+            if (PResponse == 1)
                 spriteRenderer.sprite = spriteScissors;
+            if (PResponse == 2)
+                spriteRenderer.sprite = spriteRock;
+			PResponse = Response;
         }
         hasPlayerInput = false;
     }
