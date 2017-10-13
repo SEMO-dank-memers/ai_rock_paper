@@ -1,0 +1,4 @@
+Michael Ranciglio- wrote reports over AI's choices.
+Aaron Gunther- wrote the c# code required for the AI's and converted some code from the Rule-based and Bayesian code in the book
+Jonathon Bryant- Converted code for Bayesian from book to C# and help with Rule based algorithm.
+Stephen Sladek-	Created the super fancy buttons, and sprites. Also programmed the logic for the buttons.
